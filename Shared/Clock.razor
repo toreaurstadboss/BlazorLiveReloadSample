@@ -1,0 +1,25 @@
+﻿@inject IJSRuntime JsRunTime
+@implements IDisposable
+
+<h3>The time is now:</h3>
+<div @ref="timeDiv">00:00:00</div>
+
+
+@code {
+
+    ElementReference timeDiv;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRunTime.InvokeVoidAsync("startTime", timeDiv);
+        }
+    }
+
+    public void Dispose()
+    {
+        JsRunTime.InvokeVoidAsync("stopTime");
+    }
+
+}
