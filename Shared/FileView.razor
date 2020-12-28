@@ -1,0 +1,29 @@
+﻿@inject IJSRuntime jsRuntime;
+<h3>FileView</h3>
+
+@foreach (var folder in folders)
+{
+    var depthOfFolder = folder.Split('\\').Count();
+    <p style="cursor:pointer" @onclick="() => openFolder(folder)">
+    @for (int i = 0; i < depthOfFolder; i++)
+    {
+        <span style="margin-left:10px"></span>
+    }
+    <i style="color:orange;cursor:pointer" class="fa fa-folder" /> @folder </p>
+}
+
+
+@code {
+
+    List<string> folders = Directory.GetDirectories("/").ToList();
+
+    private void openFolder(string folder)
+    {
+        jsRuntime.InvokeVoidAsync("log", folder);
+        string[] subfolders = Directory.GetDirectories(folder);
+        Console.WriteLine(folder);
+        int folderIndex = folders.IndexOf(folder);
+        folders.InsertRange(folderIndex, subfolders);
+    }
+
+}

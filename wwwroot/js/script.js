@@ -7,3 +7,6 @@ function startTime(element) {
 function stopTime() {
 	clearTimeout(clock);
 }
+
+
+function log(obj) { console.log(obj); } 
